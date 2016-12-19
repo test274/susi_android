@@ -2,6 +2,7 @@ package org.fossasia.susi.ai.adapters.viewholders;
 
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.fossasia.susi.ai.R;
@@ -21,9 +22,8 @@ public class MapViewHolder extends MessageViewHolder {
     public TextView timestampTextView;
     @BindView(R.id.map_image)
     public ImageView mapImage;
-    @BindView(R.id.chatMessageView)
-    public ChatMessageView chatMessageView;
-
+    @BindView(R.id.background_layout)
+    public LinearLayout backgroundLayout;
 
     public MapViewHolder(View itemView , ClickListener listener) {
         super(itemView , listener);

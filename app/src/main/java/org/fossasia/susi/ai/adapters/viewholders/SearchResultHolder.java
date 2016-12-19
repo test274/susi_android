@@ -21,8 +21,8 @@ public class SearchResultHolder extends RecyclerView.ViewHolder {
     public TextView title;
     @BindView(R.id.description)
     public TextView description;
-    @BindView(R.id.chatMessageView)
-    public ChatMessageView chatMessageView;
+    @BindView(R.id.background_layout)
+    public LinearLayout backgroundLayout;
     @BindView(R.id.link_preview_image)
     public ImageView previewImageView;
     @BindView(R.id.link_preview_title)

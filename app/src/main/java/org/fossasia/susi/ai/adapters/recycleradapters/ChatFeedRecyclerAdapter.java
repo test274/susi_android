@@ -335,7 +335,7 @@ public class ChatFeedRecyclerAdapter extends SelectableAdapter implements Messag
     private void handleItemEvents(final ChatViewHolder chatViewHolder, final int position) {
         final ChatMessage model = getData().get(position);
 
-        chatViewHolder.chatMessageView.setBackgroundColor(ContextCompat.getColor(currContext, isSelected(position) ? R.color.translucent_blue : android.R.color.transparent));
+        chatViewHolder.backgroundLayout.setBackgroundColor(ContextCompat.getColor(currContext, isSelected(position) ? R.color.translucent_blue : android.R.color.transparent));
         if (model != null) {
             try {
                 switch (getItemViewType(position)) {
@@ -346,6 +346,7 @@ public class ChatFeedRecyclerAdapter extends SelectableAdapter implements Messag
                             chatViewHolder.receivedTick.setImageResource(R.drawable.check);
                         else
                             chatViewHolder.receivedTick.setImageResource(R.drawable.clock);
+
                         chatViewHolder.chatTextView.setTag(chatViewHolder);
                         if (highlightMessagePosition == position) {
                             String text = chatViewHolder.chatTextView.getText().toString();
@@ -396,7 +397,7 @@ public class ChatFeedRecyclerAdapter extends SelectableAdapter implements Messag
     private void handleItemEvents(final MapViewHolder mapViewHolder, final int position) {
 
         final ChatMessage model = getData().get(position);
-        mapViewHolder.chatMessageView.setBackgroundColor(ContextCompat.getColor(currContext, isSelected(position) ? R.color.translucent_blue : android.R.color.transparent));
+        mapViewHolder.backgroundLayout.setBackgroundColor(ContextCompat.getColor(currContext, isSelected(position) ? R.color.translucent_blue : android.R.color.transparent));
 
         if (model != null) {
             try {
@@ -578,11 +579,13 @@ public class ChatFeedRecyclerAdapter extends SelectableAdapter implements Messag
             else
                 linkPreviewViewHolder.receivedTick.setImageResource(R.drawable.clock);
         }
-        linkPreviewViewHolder.chatMessageView.setBackgroundColor(ContextCompat.getColor(currContext, isSelected(position) ? R.color.translucent_blue : android.R.color.transparent));
+        linkPreviewViewHolder.backgroundLayout.setBackgroundColor(ContextCompat.getColor(currContext, isSelected(position) ? R.color.translucent_blue : android.R.color.transparent));
 
         LinkPreviewCallback linkPreviewCallback = new LinkPreviewCallback() {
             @Override
             public void onPre() {
+
+                Log.d(TAG, "onPre() called");
                 linkPreviewViewHolder.previewImageView.setVisibility(View.GONE);
                 linkPreviewViewHolder.descriptionTextView.setVisibility(View.GONE);
                 linkPreviewViewHolder.titleTextView.setVisibility(View.GONE);
@@ -592,6 +595,7 @@ public class ChatFeedRecyclerAdapter extends SelectableAdapter implements Messag
             @Override
             public void onPos(final SourceContent sourceContent, boolean b) {
 
+                Log.d(TAG, "onPos() called with: sourceContent = [" + sourceContent + "], b = [" + b + "]");
                 linkPreviewViewHolder.previewLayout.setVisibility(View.VISIBLE);
                 linkPreviewViewHolder.previewImageView.setVisibility(View.VISIBLE);
                 linkPreviewViewHolder.descriptionTextView.setVisibility(View.VISIBLE);
@@ -654,7 +658,7 @@ public class ChatFeedRecyclerAdapter extends SelectableAdapter implements Messag
         if (model != null) {
             try {
                 pieChartViewHolder.chatTextView.setText(model.getContent());
-                pieChartViewHolder.chatMessageView.setBackgroundColor(ContextCompat.getColor(currContext, isSelected(position) ? R.color.translucent_blue : android.R.color.transparent));
+                pieChartViewHolder.backgroundLayout.setBackgroundColor(ContextCompat.getColor(currContext, isSelected(position) ? R.color.translucent_blue : android.R.color.transparent));
                 pieChartViewHolder.timeStamp.setText(model.getTimeStamp());
                 pieChartViewHolder.pieChart.setUsePercentValues(true);
                 pieChartViewHolder.pieChart.setDrawHoleEnabled(true);

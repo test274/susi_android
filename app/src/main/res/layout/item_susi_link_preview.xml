@@ -1,105 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<me.himanshusoni.chatmessageview.ChatMessageView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/chatMessageView"
+    android:id="@+id/background_layout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/message_layout_margin"
-    android:layout_marginTop="@dimen/message_layout_margin"
-    app:cmv_arrowGravity="start"
-    app:cmv_arrowPosition="left"
-    app:cmv_backgroundColor="@color/susi_message_bg"
-    app:cmv_backgroundColorPressed="@color/susi_message_pressed_bg"
-    app:cmv_contentPadding="@dimen/cmv_padding"
-    app:cmv_cornerRadius="@dimen/cmv_corner_radius"
-    app:cmv_showArrow="false">
+    android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:layout_width="250dp"
+    <android.support.v7.widget.CardView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_marginBottom="@dimen/message_card_margin_small"
+        android:layout_marginLeft="@dimen/message_card_margin_medium"
+        android:layout_marginTop="@dimen/message_card_margin_small"
+        app:cardBackgroundColor="@color/susi_message_bg"
+        app:contentPadding="@dimen/standard_content_padding">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="@dimen/message_layout_max_width"
             android:layout_height="wrap_content"
-            android:gravity="end"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/text"
+            <org.fossasia.susi.ai.ChatBubbleLayout
+                android:id="@+id/chat_bubble_item_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:autoLink="web"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textColor="@color/md_black_1000"
-                android:textColorLink="@color/link_text"
-                android:textSize="@dimen/message_text_size"
-                tools:text="Hello!!"/>
+                android:layout_gravity="right"
+                android:layout_weight="1">
 
-            <TextView
-                android:id="@+id/timestamp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="bottom|end"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:textColor="@color/md_grey_600"
-                android:textSize="@dimen/timestamp_size"
-                tools:text="05:32" />
+                <TextView
+                    android:id="@+id/text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start|left"
+                    android:autoLink="all"
+                    android:maxWidth="@dimen/message_layout_max_width"
+                    android:text="@string/hello_world"
+                    android:textSize="@dimen/message_text_size" />
 
-        </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="end|right|bottom"
+                    android:gravity="bottom"
+                    android:paddingLeft="8dp">
 
 
+                    <TextView
+                        android:id="@+id/timestamp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="bottom"
+                        android:text="9:00 AM"
+                        android:textSize="@dimen/timestamp_size" />
 
-        <LinearLayout
-            android:id="@+id/preview_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
 
-            <ImageView
-                android:id="@+id/link_preview_image"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_marginTop="4dp"
-                android:background="#aaffffff"
-                tools:src="@drawable/ic_susi"
-                android:layout_weight="0.2"/>
+                </LinearLayout>
+            </org.fossasia.susi.ai.ChatBubbleLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="80dp"
-                android:layout_marginTop="4dp"
-                android:background="@color/susi_message_link_preview_bg"
-                android:layout_weight="0.8"
-                android:orientation="vertical">
+                android:id="@+id/preview_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/link_preview_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                <ImageView
+                    android:id="@+id/link_preview_image"
+                    android:layout_width="@dimen/webpreview_layout_height"
+                    android:layout_height="@dimen/webpreview_layout_height"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:layout_weight="0.2"
+                    android:background="#aaffffff"
+                    tools:src="@drawable/ic_user" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/preview_layout_height"
+                    android:layout_marginTop="@dimen/message_layout_margin"
+                    android:layout_weight="0.8"
                     android:background="@color/susi_message_link_preview_bg"
-                    android:padding="5dp"
-                    android:maxLines="1"
-                    tools:text="Website Sample Headline"
-                    android:textColor="@color/md_grey_800"/>
-                
-                <TextView
-                    android:id="@+id/link_preview_description"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_gravity="bottom"
-                    android:padding="5dp"
-                    android:gravity="center_vertical"
-                    android:maxLines="2"
-                    android:textColor="@color/md_grey_600"
-                    android:text="Sample Text Extracted from a website"/>
+                    android:orientation="vertical">
 
+                    <TextView
+                        android:id="@+id/link_preview_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/webpreview_headline_height"
+                        android:background="@color/susi_message_link_preview_bg"
+                        android:maxLines="1"
+                        android:padding="@dimen/standard_content_padding"
+                        android:textColor="@color/md_grey_800"
+                        tools:text="@string/sample_website_headline" />
+
+                    <TextView
+                        android:id="@+id/link_preview_description"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/webpreview_content_height"
+                        android:layout_gravity="bottom"
+                        android:gravity="center_vertical"
+                        android:maxLines="2"
+                        android:padding="@dimen/standard_content_padding"
+                        android:textColor="@color/md_grey_600"
+                        tools:text="@string/sample_website_description" />
+
+
+                </LinearLayout>
             </LinearLayout>
-
         </LinearLayout>
+    </android.support.v7.widget.CardView>
 
-    </LinearLayout>
-</me.himanshusoni.chatmessageview.ChatMessageView>
+</LinearLayout>
+
+
