@@ -2,7 +2,7 @@
 set -e
 
 git config --global user.name "betterclever"
-git config --global user.email "harshithdwivedi@gmail.com"
+git config --global user.email "paliwal.pranjal83@gmail.com"
 
 git clone --quiet --branch=apk https://betterclever:$GITHUB_KEY@github.com/betterclever/susi_android apk > /dev/null
 ls
