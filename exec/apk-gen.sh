@@ -1,6 +1,8 @@
 #!/bin/sh
 set -e
 
+echo $CIRCLE_PR_NUMBER
+
 if ! [ -z "$CIRCLE_PR_NUMBER" ]
 then
 	git config --global user.name "betterclever"
@@ -21,4 +23,6 @@ then
 	git branch -m apk
 
 	git push origin apk --force --quiet > /dev/null
+else
+	echo "In Else"
 fi
