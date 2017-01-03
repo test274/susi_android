@@ -1,9 +1,9 @@
 #!/bin/sh
 set -e
 
-echo $CIRCLE_PR_NUMBER
+echo $CIRCLE_BRANCH
 
-if ! [ -z "$CIRCLE_PR_NUMBER" ]
+if ! [ $CIRCLE_BRANCH == "pull*" ]
 then
 	git config --global user.name "betterclever"
 	git config --global user.email "paliwal.pranjal83@gmail.com"
