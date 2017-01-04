@@ -1,6 +1,7 @@
 #!/bin/bash
 set -e
 
+#useless test comment
 echo $CIRCLE_BRANCH
 
 if [[ $CIRCLE_BRANCH != pull* ]]
