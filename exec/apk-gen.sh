@@ -3,11 +3,12 @@ set -e
 
 echo $CIRCLE_BRANCH
 
-if ! [[ $CIRCLE_BRANCH == "pull*" ]]
+if [[ $CIRCLE_BRANCH != "pull*" ]]
 then
 	git config --global user.name "betterclever"
 	git config --global user.email "paliwal.pranjal83@gmail.com"
 
+	echo "hi"
 	git clone --quiet --branch=apk https://betterclever:$GITHUB_KEY@github.com/betterclever/susi_android apk > /dev/null
 	ls
 	cp -r ${HOME}/${CIRCLE_PROJECT_REPONAME}/app/build/outputs/apk/app-debug.apk apk/susi-debug.apk
